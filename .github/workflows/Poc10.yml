@@ -4,6 +4,7 @@ jobs:
   sonar:
     runs-on: self-hosted
     steps:
+      - uses: actions/checkout@v2
       - name: SonarQube Scan
         run: mvn sonar:sonar
         env:
