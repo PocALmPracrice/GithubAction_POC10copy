@@ -6,3 +6,9 @@ jobs:
       - uses: actions/checkout@v4
       - run: mvn clean install
       
+     
+      - name: SonarQube Scan
+        run: mvn sonar:sonar -Dsonar.host.url="${SONAR_URL}"  -Dsonar.login="${SONAR_GITHUBACTION}" -Dsonar.sources=. -Dsonar.java.binaries=./target
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_GITHUBACTION }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
