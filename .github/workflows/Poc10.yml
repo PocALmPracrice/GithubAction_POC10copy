@@ -2,11 +2,22 @@ on: push
 run-name: self-hosted
 jobs:
   sonar:
-    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
       - name: SonarQube Scan
         run: mvn sonar:sonar
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_GITHUBACTION }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_URL }} 
+          SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
+
+  slack_notification:
+    steps:
+      - if: ${{ success() }}
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload: |
+            {
+              "text": "Git push done in the repo. Maven project built successfully."
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
