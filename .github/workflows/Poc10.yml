@@ -19,7 +19,7 @@ jobs:
    if: ${{ always() }}
    steps:
       - name: Send notification on Slack using Webhooks - Success
-        if: ${{ success() }}
+        if: ${{ success() &&  always()}}
         uses: slackapi/slack-github-action@v1.24.0
         with:
           payload: |
@@ -30,7 +30,7 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_TOKEN}}
 
       - name: Send notification on Slack using Webhooks - Failure
-        if: ${{ failure() }}
+        if: ${{ failure()  &&  always()}}
         uses: slackapi/slack-github-action@v1.24.0
         with:
           payload: |
