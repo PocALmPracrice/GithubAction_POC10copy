@@ -14,11 +14,12 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
 #slack notification jon
   slack_notification:  
-   needs: sonar
+   # needs: sonar
    runs-on: self-hosted
-   if: ${{success()}}
-   steps:      
+   if: ${{ always() }}
+   steps:
       - name: Send notification on Slack using Webhooks - Success
+        if: ${{ success() }}
         uses: slackapi/slack-github-action@v1.24.0
         with:
           payload: |
@@ -26,7 +27,7 @@ jobs:
               "text": "Git push done in the repo. Maven project built successfully."
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: Send notification on Slack using Webhooks - Failure
         if: ${{ failure() }}
