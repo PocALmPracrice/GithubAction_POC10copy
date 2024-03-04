@@ -1,18 +1,19 @@
 on: push
-# run-name: self-hosted
+# sonar analysys in
 jobs:
   sonar:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
       - name: SonarQube Scan
-        run: mvn sonar:sonar
+        run: mvn1 sonar:sonar
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_GITHUBACTION }}
           SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
-
+#slack notification jon
   slack_notification:  
    runs-on: self-hosted
+   if: ${{success()}}
    steps:      
       - name: Send notification on Slack using Webhooks - Success
         uses: slackapi/slack-github-action@v1.24.0
@@ -24,3 +25,13 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_TOKEN }}
 
+      - name: Send notification on Slack using Webhooks - Failure
+        if: ${{ failure() }}
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload: |
+            {
+              "text": "Git push done in the repo. Maven build failed. Please check the build logs for details."
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
