@@ -7,13 +7,14 @@ jobs:
       - uses: actions/checkout@v2
       - name: SonarQube Scan
         run: |
-         mvn sonar:sonar
+         mvn1 sonar:sonar
          export MAVEN_EXIT_CODE=$?
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_GITHUBACTION }}
           SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
 #slack notification jon
   slack_notification:  
+   needs: sonar
    runs-on: self-hosted
    if: ${{success()}}
    steps:      
