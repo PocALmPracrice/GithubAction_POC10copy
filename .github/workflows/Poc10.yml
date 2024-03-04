@@ -6,3 +6,6 @@ jobs:
     steps:
       - name: SonarQube Scan
         run: mvn sonar:sonar
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_GITHUBACTION }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
