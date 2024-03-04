@@ -8,9 +8,8 @@ jobs:
       
      
    
-  
       - name: SonarQube Scan
-      - uses: kitabisa/sonarqube-action@v1.2.0
-        with:
-         host: ${{ secrets.SONAR_URL }}
-         login: ${{ secrets.SONAR_GITHUBACTION}}
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+         SONAR_TOKEN: ${{ secrets.SONAR_GITHUBACTION}}
+         SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
