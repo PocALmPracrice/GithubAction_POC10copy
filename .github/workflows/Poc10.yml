@@ -40,7 +40,7 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_TOKEN }}
   jfrog:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - name: Install JFrog CLI
       run: |
