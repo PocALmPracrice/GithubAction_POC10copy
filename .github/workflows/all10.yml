@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: SonarQube Scan
-        run: mvn sonar:sonar
+        run: mvn1 sonar:sonar
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_GITHUBACTION }}
           SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
