@@ -1,23 +1,21 @@
 on: push
 # sonar analysys in
 jobs:
-  sonar:
+   sonar:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
       - name: SonarQube Scan
-        run: |
-         mvn sonar:sonar
-         export MAVEN_EXIT_CODE=$?
+        run: mvn sonar:sonar
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_GITHUBACTION }}
           SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
 #slack notification jon
-  slack_notification:  
+   slack_notification:  
    # needs: sonar
-   runs-on: self-hosted
-   if: ${{ always() }}
-   steps:
+    runs-on: self-hosted
+    if: ${{ always() }}
+    steps:
       - name: Send notification on Slack using Webhooks - Success
         if: ${{ success() &&  always()}}
         uses: slackapi/slack-github-action@v1.24.0
@@ -39,7 +37,7 @@ jobs:
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_TOKEN }}
-  jfrog:
+   jfrog:
     runs-on: ubuntu-latest
     steps:
     - name: Install JFrog CLI
