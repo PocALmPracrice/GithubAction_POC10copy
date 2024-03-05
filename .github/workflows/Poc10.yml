@@ -8,7 +8,7 @@ jobs:
       - name: SonarQube Scan
         run: |
          mvn sonar:sonar
-         # export MAVEN_EXIT_CODE=$?
+         export MAVEN_EXIT_CODE=$?
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_GITHUBACTION }}
           SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
@@ -40,7 +40,7 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_TOKEN }}
   jfrog:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - name: Install JFrog CLI
       run: |
