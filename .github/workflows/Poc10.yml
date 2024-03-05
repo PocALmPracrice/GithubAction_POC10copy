@@ -7,7 +7,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: SonarQube Scan
         run: |
-         mvn1 sonar:sonar
+         mvn sonar:sonar
          export MAVEN_EXIT_CODE=$?
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_GITHUBACTION }}
@@ -44,8 +44,9 @@ jobs:
     steps:
     - name: Install JFrog CLI
       run: |
-        curl -fL https://getcli.jfrog.io | sh
-        sudo mv jfrog /usr/local/bin/
+        Invoke-WebRequest -Uri "https://getcli.jfrog.io" -OutFile "jfrog.zip"
+        Expand-Archive -Path "jfrog.zip" -DestinationPath "C:\jfrog"
+        Move-Item -Path "C:\jfrog\jfrog.exe" -Destination "$env:ProgramFiles\jfrog"
 
     - name: Set JFrog CLI Path
       run: |
